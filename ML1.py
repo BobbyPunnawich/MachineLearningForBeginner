@@ -1,8 +1,22 @@
-import pylab
-from sklearn import datasets
-digit_dataset = datasets.load_digits()
+from scipy.io import loadmat
+import matplotlib.pyplot as plt
 
-print(digit_dataset.target[2])
-pylab.imshow(digit_dataset.images[2],cmap=pylab.cm.gray_r)
-pylab.show()
+mnist_raw = loadmat('mnist-original.mat')
 
+mnist = {
+    "data": mnist_raw["data"].T,
+    "target": mnist_raw["label"][0]
+}
+x,y= mnist["data"],mnist["target"]
+
+number = x[60000]
+number_image = number.reshape(28,28)
+
+print(y[60000])
+
+plt.imshow(
+    number_image, 
+    cmap=plt.cm.binary,
+    interpolation='nearest'
+)
+plt.show()
